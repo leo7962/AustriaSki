@@ -6,13 +6,14 @@ namespace AustriaSki
 {
     class Point
     {
-        public int pointX { get; set; }
-        public int pointY { get; set; }
 
-        public Point(int pointX, int pointY)
+        public int srcX;
+        public int srcY;
+
+        public Point(int srcX, int srcY)
         {
-            this.pointX = pointX;
-            this.pointY = pointY;
-        }
+            this.srcX = srcX;
+            this.srcY = srcY;
+        }        
     }
 }

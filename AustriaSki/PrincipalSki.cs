@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 namespace AustriaSki
 {
     class PrincipalSki
     {
-        public static int maxColumns = 1000, maxRows = 1000;
+        //public static int maxColumns = 1000, maxRows = 1000;
 
-        static int[,] sampleMapInput = new int [4,4]{
+        static int[,] sampleMapInput = new int[4, 4]{
         { 4, 8, 7, 3 },
         { 2, 5, 9, 3 },
         { 6, 3, 2, 5 },
         { 4, 4, 1, 6 }
         };
 
-        public static int[,] input = new int[maxColumns, maxRows];
+        //public static int[,] input = new int[maxColumns, maxRows];
 
-        public static ArrayList overAllSteepestPath = new ArrayList();
+        public static List<int> overAllstepOfPath = new List<int>();
 
         public static void readLines()
         {
@@ -45,47 +45,47 @@ namespace AustriaSki
             FindAllSteepest(steepestPathFinder);
         }
 
-        public static void FindAllSteepest(PathFinder steepestPathFinder)
+        public static void FindAllSteepest(PathFinder pathFinder)
         {
-            for (int i = 0; i < maxColumns; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < maxRows; j++)
+                for (int j = 0; j < 4; j++)
                 {
-                    ArrayList steepPath = new ArrayList(steepestPathFinder.GetStepOfPath(i,j));
+                    List<int> stepOfPath = new List<int>(pathFinder.GetStepOfPath(i, j));
 
-                    int overAllSteepestPathSize = overAllSteepestPath.Count;
-                    int steepestPathSize = steepPath.Count;
+                    int overAllSteepestPathSize = sampleMapInput.Length;
+                    int steepestPathSize = stepOfPath.Count;
 
-                    if (((overAllSteepestPathSize == 0 || overAllSteepestPathSize <= steepestPathSize)) && steepestPathSize > 0)
+                    if ((overAllSteepestPathSize == 0 || overAllSteepestPathSize <= steepestPathSize) && steepestPathSize > 0)
                     {
                         if (overAllSteepestPathSize == steepestPathSize)
                         {
-                            int overAllSteepDepth = calculateSteepDepth(overAllSteepestPath);
-                            int currentSteepDepth = calculateSteepDepth(steepPath);
+                            int overAllSteepDepth = calculateSteepDepth(overAllstepOfPath);
+                            int currentSteepDepth = calculateSteepDepth(stepOfPath);
 
                             if (currentSteepDepth > overAllSteepDepth)
                             {
-                                setNewSteepestPath(steepPath);
-                            }                            
+                                setNewSteepestPath(stepOfPath);
+                            }
                         }
                         else
                         {
-                            setNewSteepestPath(steepPath);
+                            setNewSteepestPath(stepOfPath);
                         }
                     }
                 }
             }
-            Console.WriteLine("El camino más empinado es " + overAllSteepestPath.ToString() + " de longitud " + overAllSteepestPath.Count + " y profundidad " + calculateSteepDepth(overAllSteepestPath));
+            Console.WriteLine("El camino más empinado es " + overAllstepOfPath.ToString() + " de longitud " + overAllstepOfPath.Count + " y profundidad " + calculateSteepDepth(overAllstepOfPath));
         }
 
-        private static int calculateSteepDepth(ArrayList steepestPath)
+        private static int calculateSteepDepth(List<int> stepOfPath)
         {
-            return (int)steepestPath.ToArray().GetValue(0) - (int)steepestPath.ToArray().GetValue(steepestPath.Count - 1);
+            return (int)stepOfPath.ToArray().GetValue(0) - (int)stepOfPath.ToArray().GetValue(stepOfPath.Count - 1);
         }
 
-        private static void setNewSteepestPath(ArrayList steepestPath)
+        private static void setNewSteepestPath(List<int> stepOfPath)
         {
-            overAllSteepestPath = new ArrayList(steepestPath);
+            overAllstepOfPath = new List<int>(stepOfPath);
         }
     }
 }
