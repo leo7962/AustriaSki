@@ -101,7 +101,7 @@ namespace AustriaSki
             path.Remove(path.Count - 1);
         }
 
-        private bool nextPossible(int nextX, int nextY, int value)
+        public bool nextPossible(int nextX, int nextY, int value)
         {
             if ((nextX <= numberOfColumns - 1 && nextX >= 0) && (nextY <= numberOfRows - 1 && nextY >= 0))
             {
@@ -111,12 +111,12 @@ namespace AustriaSki
             return false;
         }
 
-        private bool someonePossible(int x, int y, int value)
+        public bool someonePossible(int x, int y, int someValue)
         {
-            bool leftPossible = nextPossible(x, y - 1, value);
-            bool rightPossible = nextPossible(x, y - 1, value);
-            bool upPossible = nextPossible(x - 1, y, value);
-            bool downPossible = nextPossible(x + 1, y, value);
+            bool leftPossible = nextPossible(x, y - 1, someValue);
+            bool rightPossible = nextPossible(x, y - 1, someValue);
+            bool upPossible = nextPossible(x - 1, y, someValue);
+            bool downPossible = nextPossible(x + 1, y, someValue);
 
             return leftPossible || rightPossible || upPossible || downPossible;
         }
