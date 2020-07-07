@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AustriaSki
+﻿namespace AustriaSki
 {
     class Point
     {
-
         public int srcX;
         public int srcY;
 
@@ -14,6 +9,6 @@ namespace AustriaSki
         {
             this.srcX = srcX;
             this.srcY = srcY;
-        }        
+        }
     }
 }

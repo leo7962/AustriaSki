@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 
 namespace AustriaSki
 {
@@ -9,7 +9,7 @@ namespace AustriaSki
         private int numberOfColumns;
         private int numberOfRows;
         private int maxValue;
-        private List<int> stepOfPath = new List<int>();
+        private ArrayList stepOfPath = new ArrayList();
 
         /// <summary>
         /// Se realiza la clase que contendrá los métodos para la busqueda de la ruta dentro de la matríz de cualquier tamaño
@@ -24,14 +24,14 @@ namespace AustriaSki
             this.maxValue = maxValue;
         }
 
-        public List<int> GetStepOfPath(int fromX, int fromY)
+        public ArrayList GetStepOfPath(int fromX, int fromY)
         {
-            stepOfPath = new List<int>();
-            crossPoint(new Point(fromX, fromY), maxValue, new List<int>());
+            stepOfPath = new ArrayList();
+            crossPoint(new Point(fromX, fromY), maxValue, new ArrayList());
             return stepOfPath;
         }
 
-        private void crossPoint(Point point, int value, List<int> path)
+        private void crossPoint(Point point, int value, ArrayList path)
         {
             int currentValue = input[point.srcX, point.srcY];
             int srcX = point.srcX;
@@ -39,7 +39,7 @@ namespace AustriaSki
 
             if (path == null)
             {
-                path = new List<int>();
+                path = new ArrayList();
             }
 
             if (!someonePossible(srcX, srcY, currentValue))
@@ -53,16 +53,16 @@ namespace AustriaSki
                         int currentStepDept = calculateSteepDepth(path);
                         if (currentStepDept > overAllStepDepth)
                         {
-                            stepOfPath = new List<int>(path);
+                            stepOfPath = new ArrayList(path);
                         }
                     }
                     else
                     {
-                        stepOfPath = new List<int>(path);
+                        stepOfPath = new ArrayList(path);
                     }
                 }
 
-                Console.WriteLine("the path is " + path.ToString());
+                Console.WriteLine("the path is " + printList(path));
                 path.Remove(path.Count - 1);
                 return;
             }
@@ -101,7 +101,7 @@ namespace AustriaSki
             path.Remove(path.Count - 1);
         }
 
-        public bool nextPossible(int nextX, int nextY, int value)
+        private bool nextPossible(int nextX, int nextY, int value)
         {
             if ((nextX <= numberOfColumns - 1 && nextX >= 0) && (nextY <= numberOfRows - 1 && nextY >= 0))
             {
@@ -111,7 +111,7 @@ namespace AustriaSki
             return false;
         }
 
-        public bool someonePossible(int x, int y, int value)
+        private bool someonePossible(int x, int y, int value)
         {
             bool leftPossible = nextPossible(x, y - 1, value);
             bool rightPossible = nextPossible(x, y - 1, value);
@@ -121,9 +121,20 @@ namespace AustriaSki
             return leftPossible || rightPossible || upPossible || downPossible;
         }
 
-        private static int calculateSteepDepth(List<int> stepOfPath)
+        private static int calculateSteepDepth(ArrayList stepOfPath)
         {
             return (int)stepOfPath.ToArray().GetValue(0) - (int)stepOfPath.ToArray().GetValue(stepOfPath.Count - 1);
+        }
+
+
+        private string printList(ArrayList list)
+        {
+            string r = "";
+            foreach (var item in list)
+            {
+                r += (((r) != "") ? "," : "") + item;
+            }            
+            return "[" + r + "]";
         }
     }
 }
