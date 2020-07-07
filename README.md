@@ -1,4 +1,4 @@
-# AustriaSki
+# AustriaSki by Leonardo Hernández
 Project developed in .Net Core 3.1
 
 Let’s say you hopped on a flight to the Kitzbühel ski resort in Austria. Being a software engineer you
