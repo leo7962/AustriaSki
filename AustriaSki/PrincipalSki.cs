@@ -36,10 +36,10 @@ namespace AustriaSki
                         foreach (var word in words)
                         {
                             input[i, j] = int.Parse(word);
-                            
+
                             j++;
                         }
-                        i++;                        
+                        i++;
                     }
                     reader.Close();
                 }
