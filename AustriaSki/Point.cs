@@ -1,6 +1,6 @@
 ﻿namespace AustriaSki
 {
-    class Point
+    internal class Point
     {
         public int srcX;
         public int srcY;

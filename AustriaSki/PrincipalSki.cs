@@ -4,11 +4,10 @@ using System.IO;
 
 namespace AustriaSki
 {
-    class PrincipalSki
+    internal class PrincipalSki
     {
         public static int maxColumns = 1000, maxRows = 1000;
-
-        static int[,] sampleMapInput = new int[4, 4]{
+        private static readonly int[,] sampleMapInput = new int[4, 4]{
         { 4, 8, 7, 3 },
         { 2, 5, 9, 3 },
         { 6, 3, 2, 5 },
@@ -19,7 +18,7 @@ namespace AustriaSki
 
         public static ArrayList overAllstepOfPath = new ArrayList();
 
-        public static void readLines()
+        public static void ReadLines()
         {
             try
             {   // Open the text file using a stream reader.
@@ -33,7 +32,7 @@ namespace AustriaSki
                     {
                         string[] words = text.Split(" ");
                         int j = 0;
-                        foreach (var word in words)
+                        foreach (string word in words)
                         {
                             input[i, j] = int.Parse(word);
 
@@ -53,7 +52,7 @@ namespace AustriaSki
 
         public static void Main(string[] args)
         {
-            readLines();
+            ReadLines();
             //Descomentar si quiere realizar la prueba
             //PathFinder pathFinder = new PathFinder(sampleMapInput, maxRows, maxColumns, 1500);
 
@@ -76,30 +75,30 @@ namespace AustriaSki
                     {
                         if (overAllSteepestPathSize == steepestPathSize)
                         {
-                            int overAllSteepDepth = calculateSteepDepth(overAllstepOfPath);
-                            int currentSteepDepth = calculateSteepDepth(stepOfPath);
+                            int overAllSteepDepth = CalculateSteepDepth(overAllstepOfPath);
+                            int currentSteepDepth = CalculateSteepDepth(stepOfPath);
 
                             if (currentSteepDepth > overAllSteepDepth)
                             {
-                                setNewSteepestPath(stepOfPath);
+                                SetNewSteepestPath(stepOfPath);
                             }
                         }
                         else
                         {
-                            setNewSteepestPath(stepOfPath);
+                            SetNewSteepestPath(stepOfPath);
                         }
                     }
                 }
             }
-            Console.WriteLine("El camino más empinado es " + overAllstepOfPath.ToString() + " de longitud " + overAllstepOfPath.Count + " y profundidad " + calculateSteepDepth(overAllstepOfPath));
+            Console.WriteLine("El camino más empinado es " + overAllstepOfPath.ToString() + " de longitud " + overAllstepOfPath.Count + " y profundidad " + CalculateSteepDepth(overAllstepOfPath));
         }
 
-        private static int calculateSteepDepth(ArrayList stepOfPath)
+        private static int CalculateSteepDepth(ArrayList stepOfPath)
         {
             return (int)stepOfPath.ToArray().GetValue(0) - (int)stepOfPath.ToArray().GetValue(stepOfPath.Count - 1);
         }
 
-        private static void setNewSteepestPath(ArrayList stepOfPath)
+        private static void SetNewSteepestPath(ArrayList stepOfPath)
         {
             overAllstepOfPath = new ArrayList(stepOfPath);
         }

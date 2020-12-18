@@ -5,10 +5,10 @@ namespace AustriaSki
 {
     public class PathFinder
     {
-        private int[,] input;
-        private int numberOfColumns;
-        private int numberOfRows;
-        private int maxValue;
+        private readonly int[,] input;
+        private readonly int numberOfColumns;
+        private readonly int numberOfRows;
+        private readonly int maxValue;
         private ArrayList stepOfPath = new ArrayList();
 
         /// <summary>
@@ -27,11 +27,11 @@ namespace AustriaSki
         public ArrayList GetStepOfPath(int fromX, int fromY)
         {
             stepOfPath = new ArrayList();
-            crossPoint(new Point(fromX, fromY), maxValue, new ArrayList());
+            CrossPoint(new Point(fromX, fromY), maxValue, new ArrayList());
             return stepOfPath;
         }
 
-        private void crossPoint(Point point, int value, ArrayList path)
+        private void CrossPoint(Point point, int value, ArrayList path)
         {
             int currentValue = input[point.srcX, point.srcY];
             int srcX = point.srcX;
@@ -42,15 +42,15 @@ namespace AustriaSki
                 path = new ArrayList();
             }
 
-            if (!someonePossible(srcX, srcY, currentValue))
+            if (!SomeonePossible(srcX, srcY, currentValue))
             {
                 path.Add(input[srcX, srcY]);
                 if (stepOfPath == null || stepOfPath.Count == 0 || stepOfPath.Count <= path.Count)
                 {
                     if (stepOfPath.Count == path.Count)
                     {
-                        int overAllStepDepth = calculateSteepDepth(stepOfPath);
-                        int currentStepDept = calculateSteepDepth(path);
+                        int overAllStepDepth = CalculateSteepDepth(stepOfPath);
+                        int currentStepDept = CalculateSteepDepth(path);
                         if (currentStepDept > overAllStepDepth)
                         {
                             stepOfPath = new ArrayList(path);
@@ -62,7 +62,7 @@ namespace AustriaSki
                     }
                 }
 
-                Console.WriteLine("the path is " + printList(path));
+                Console.WriteLine("the path is " + PrintList(path));
                 path.Remove(path.Count - 1);
                 return;
             }
@@ -72,36 +72,36 @@ namespace AustriaSki
 
             //Move up
             int prevX = srcX - 1;
-            if (nextPossible(prevX, srcY, value) && (srcX != (numberOfColumns - 1)))
+            if (NextPossible(prevX, srcY, value) && (srcX != (numberOfColumns - 1)))
             {
-                crossPoint(new Point(prevX, srcY), value, path);
+                CrossPoint(new Point(prevX, srcY), value, path);
             }
 
             //move right
             int nextY = srcY + 1;
-            if (nextPossible(srcX, nextY, value))
+            if (NextPossible(srcX, nextY, value))
             {
-                crossPoint(new Point(srcX, nextY), value, path);
+                CrossPoint(new Point(srcX, nextY), value, path);
             }
 
             //move left
             int prevY = srcY - 1;
-            if (nextPossible(srcX, prevY, value))
+            if (NextPossible(srcX, prevY, value))
             {
-                crossPoint(new Point(srcX, prevY), value, path);
+                CrossPoint(new Point(srcX, prevY), value, path);
             }
 
             //move down
             int nextX = srcX + 1;
-            if (nextPossible(nextX, srcY, value))
+            if (NextPossible(nextX, srcY, value))
             {
-                crossPoint(new Point(nextX, srcY), value, path);
+                CrossPoint(new Point(nextX, srcY), value, path);
             }
 
             path.Remove(path.Count - 1);
         }
 
-        private bool nextPossible(int nextX, int nextY, int value)
+        private bool NextPossible(int nextX, int nextY, int value)
         {
             if ((nextX <= numberOfColumns - 1 && nextX >= 0) && (nextY <= numberOfRows - 1 && nextY >= 0))
             {
@@ -111,29 +111,30 @@ namespace AustriaSki
             return false;
         }
 
-        private bool someonePossible(int x, int y, int value)
+        private bool SomeonePossible(int x, int y, int value)
         {
-            bool leftPossible = nextPossible(x, y - 1, value);
-            bool rightPossible = nextPossible(x, y - 1, value);
-            bool upPossible = nextPossible(x - 1, y, value);
-            bool downPossible = nextPossible(x + 1, y, value);
+            bool leftPossible = NextPossible(x, y - 1, value);
+            bool rightPossible = NextPossible(x, y - 1, value);
+            bool upPossible = NextPossible(x - 1, y, value);
+            bool downPossible = NextPossible(x + 1, y, value);
 
             return leftPossible || rightPossible || upPossible || downPossible;
         }
 
-        private static int calculateSteepDepth(ArrayList stepOfPath)
+        private static int CalculateSteepDepth(ArrayList stepOfPath)
         {
             return (int)stepOfPath.ToArray().GetValue(0) - (int)stepOfPath.ToArray().GetValue(stepOfPath.Count - 1);
         }
 
 
-        private string printList(ArrayList list)
+        private string PrintList(ArrayList list)
         {
             string r = "";
-            foreach (var item in list)
+            foreach (object item in list)
             {
                 r += (((r) != "") ? "," : "") + item;
-            }            
+            }
+
             return "[" + r + "]";
         }
     }
