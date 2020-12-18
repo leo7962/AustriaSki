@@ -22,26 +22,24 @@ namespace AustriaSki
         {
             try
             {   // Open the text file using a stream reader.
-                using (StreamReader reader = new StreamReader("C:/Users/Ingen/source/repos/AustriaSki/AustriaSki/map.txt"))
+                using StreamReader reader = new StreamReader("C:/Users/Ingen/source/repos/AustriaSki/AustriaSki/map.txt");
+                // Read the stream to a string, and write the string to the console.                                       
+                int i = 0;
+                string text = null;
+
+                while ((text = reader.ReadLine()) != null)
                 {
-                    // Read the stream to a string, and write the string to the console.                                       
-                    int i = 0;
-                    string text = null;
-
-                    while ((text = reader.ReadLine()) != null)
+                    string[] words = text.Split(" ");
+                    int j = 0;
+                    foreach (string word in words)
                     {
-                        string[] words = text.Split(" ");
-                        int j = 0;
-                        foreach (string word in words)
-                        {
-                            input[i, j] = int.Parse(word);
+                        input[i, j] = int.Parse(word);
 
-                            j++;
-                        }
-                        i++;
+                        j++;
                     }
-                    reader.Close();
+                    i++;
                 }
+                reader.Close();
             }
             catch (IOException e)
             {
